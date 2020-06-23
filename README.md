@@ -1,2 +1,1 @@
-# algocomix.github.io
-comix 
+comix
