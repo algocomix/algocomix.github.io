@@ -1,60 +1,66 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <link rel="stylesheet" href="styles.css"/>
-    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <title>XKCD Browser</title>
-  </head>
-  <body>
-    <div class="container">
-      <div class="row">
-        <div class="col-md-3">
-          <img id='logo' align='middle' src='images/logo.png'/>
-        </div>
-        <div class="col-md-9">
-          <h2>A webcomic of romance, sarcasm, math, and language.</h2>
-        </div>
-      </div>
-    </div>
-
-    <div class="container" id="app-container">
-      <div id="app">
-        <div v-if="loading">
-          <p>Loading...</p>
-        </div>
-        <div v-else>
-          <h2>{{ current.safe_title }}</h2>
-          <p>
-              <button id='btn-xkcd' class="btn" v-on:click="firstComic">First</button>
-              <button id='btn-xkcd' class="btn" v-on:click="previousComic">Previous</button>
-              <button id='btn-xkcd' class="btn" v-on:click="randomComic">Random</button>
-              <button id='btn-xkcd' class="btn" v-on:click="nextComic">Next</button>
-              <button id='btn-xkcd' class="btn" v-on:click="lastComic">Last</button>
-          </p>
-          <img v-bind:src="current.img" v-bind:alt="current.alt">
-          <p><i># {{ number }}, drawn on {{ current.day }} {{ month }} {{ current.year }}</i></p>
-
-          <div id='comments'>
-            <h3>Add a Comment</h3>
-            <form v-on:submit.prevent="addComment">
-              <input v-model="addedName" placeholder="Name"></p>
-              <textarea v-model="addedComment"></textarea>
-              <br/>
-              <button id='btn-xkcd' class="btn" type="submit">Comment</button>
-            </form>
-            <h3 id='comments-heading'>Comments</h3>
-            <div v-for="comment in comments[number]">
-                <hr>
-                <p>{{comment.text}}</p>
-                <p><i>-- {{comment.author}}</i></p>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="style.css"/>
+    <link rel="icon" 
+      type="image/png" 
+      href="images/xkcd_favicon.png"/>
+    <title>xkcd</title>
+</head>
+<body>
+    <div id="app">
+        <div id="top">
+            <div id="topLeft">
+                <ul>
+                    <li><a href="#">Archive</a></li>
+                    <li><a href="#">What If?</a></li>
+                    <li><a href="#">Blag</a></li>
+                    <li><a href="#">Store</a></li>
+                    <li><a href="#">About</a></li>
+                </ul>
             </div>
-          </div>
-
+            <div id="topRight">
+                <div id="logo">
+                    <span><a href="#"><img src="images/xkcd.png"/ alt="xkcd.com logo" height="83" width="185"></a></span>
+                    <span id="slogan">A webcomic of romance,<br> sarcasm, math, and language.</span>
+                </div>
+                <div>
+                    xkcd updates every Monday, Wednesday, and Friday.
+                </div>
+            </div>
+            <div id="bgLeft" class="bg box"></div>
+            <div id="bgRight" class="bg box"></div>
+        </div>
+        <div id="bottom" class="box">
+            <div v-if="loading">
+            <p>Loading...</p>
+            </div>
+            <div v-else>
+            <div id="title">{{ current.safe_title }}</div>
+            <ul class="comicNav">
+                <li><a href="#" @click="firstComic">|<</a></li>
+                <li><a href="#" @click="previousComic">< Prev</a></li>
+                <li><a href="#" @click="randomComic">Random</a></li>
+                <li><a href="#" @click="nextComic">Next ></a></li>
+                <li><a href="#" @click="lastComic">>|</a></li>
+            </ul>
+            <img :src="current.img" :title="current.alt" :alt="current.alt">
+            <ul class="comicNav">
+                <li><a href="#" @click="firstComic">|<</a></li>
+                <li><a href="#" @click="previousComic">< Prev</a></li>
+                <li><a href="#" @click="randomComic">Random</a></li>
+                <li><a href="#" @click="nextComic">Next ></a></li>
+                <li><a href="#" @click="lastComic">>|</a></li>
+            </ul>
+            <p><i>#{{number}}, drawn on {{current.day}} {{month}} {{current.year}}</i></p>
+            <p>Please visit <a href="https://xkcd.com" target="_blank">xkcd.com</a> and support this awesome webcomic</p>
+            </div>
         </div>
       </div>
-    </div>
-    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.13/dist/vue.js"></script>
-    <script src="script.js"></script>
-  </body>
+      <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+      <script src="script.js"/></script>
+    </body>
 </html>
